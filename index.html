@@ -7,38 +7,56 @@
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,700;1,400&amp;family=Fraunces:wght@700;900&amp;display=swap" rel="stylesheet">
   <style>
-        body { font-family: 'Alegreya', serif; }
-        .scene { display: none; }
-        .scene.active { display: block; animation: fadeUp 0.6s ease-out; }
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        body { 
+            font-family: 'Alegreya', serif; 
+            background-color: #2b1b17; /* Koyu ahşap arka plan */
+            perspective: 2000px; /* 3D derinlik */
         }
-        .story-img { border: 4px solid rgba(255, 215, 0, 0.3); }
         
-        /* Sirk Teması Renkleri */
-        .circus-pattern {
-            background-color: #2a0033; /* Koyu mor arka plan */
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5c5 10 15 15 25 15-10 5-15 15-15 25-5-10-15-15-25-15 10-5 15-15 15-25z' fill='rgba(255,215,0,0.04)'/%3E%3C/svg%3E");
+        /* Sayfaların 3D çevrilme animasyonu */
+        .scene { 
+            display: none; 
+            transform-origin: left center; /* Cilt kısmı soldan döner */
         }
-        .story-box {
-            background-color: rgba(45, 12, 51, 0.85); /* Bordo/mor cam efektli kutu */
-            border: 1px solid rgba(255, 215, 0, 0.2);
+        .scene.active { 
+            display: block; 
+            animation: pageTurn 0.8s ease-in-out forwards; 
+        }
+        @keyframes pageTurn {
+            0% { transform: rotateY(-180deg); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: rotateY(0deg); opacity: 1; }
+        }
+
+        /* Kitap kağıdı tasarımı */
+        .book-page {
+            background-color: #fdf6e3; /* Krem rengi kağıt */
+            color: #5d4037; /* Kahverengi yazı */
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.6); /* Kitap gölgesi */
+            border-left: 10px solid #d7ccc8; /* Cilt shadow */
+            border-radius: 0px 15px 15px 0px;
+        }
+        
+        /* İç resimlere kağıt dokusu uyumu */
+        .story-img { 
+            border: 4px solid #d7ccc8; 
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+            border-radius: 8px;
         }
         
         /* Buton Stilleri */
         .nav-btn { 
             transition: transform 0.2s, box-shadow 0.2s; 
-            background-color: #d97706; /* Turuncu/Altın */
-            color: white;
+            background-color: #6d4c41; /* Kahverengi buton */
+            color: #fff;
         }
         .nav-btn:hover { 
             transform: translateY(-2px); 
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3); 
-            background-color: #b45309;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3); 
+            background-color: #4e342e;
         }
         .nav-btn:disabled { 
-            background-color: #4b5563; 
+            background-color: #bcaaa4; 
             cursor: not-allowed; 
             transform: none;
             box-shadow: none;
@@ -48,28 +66,28 @@
         .signature {
             margin-top: 40px;
             font-size: 18px;
-            color: #fbbf24; /* Altın sarısı */
+            color: #8d6e63;
             font-weight: bold;
-            border-top: 1px dashed rgba(251, 191, 36, 0.3);
+            border-top: 1px dashed rgba(141, 110, 99, 0.5);
             padding-top: 15px;
         }
     </style>
  </head>
- <body class="min-h-screen circus-pattern text-white">
+ <body class="min-h-screen">
   <main class="max-w-3xl mx-auto px-4 py-8">
 
    <!-- SAYFA 1 -->
    <div id="page1" class="scene active">
-    <div class="story-box backdrop-blur-sm rounded-2xl p-6 md:p-10 shadow-2xl">
-     <h1 class="text-center mb-6 text-4xl md:text-5xl text-yellow-400" style="font-family:'Fraunces',serif">Sirk Telası</h1>
+    <div class="book-page p-6 md:p-10 shadow-2xl">
+     <h1 class="text-center mb-6 text-4xl md:text-5xl text-amber-800" style="font-family:'Fraunces',serif">Sirk Telası</h1>
      <img src="1.jpg" alt="Parkta oynayan balıklar" class="story-img w-full max-w-xl mx-auto rounded-xl mb-6 object-contain">
      <div class="space-y-3 text-lg leading-relaxed">
       <p>Bir gün yedi küçük balık; Bugsyfish, Rosyfish, Mirfish, Elifish, Pinkfish, Sinfish ve Ninfish parkta neşeyle oynuyorlardı. Tam o sırada etrafta şöyle bir haber yankılandı:</p>
-      <p class="font-bold text-yellow-300">"Duyduk duymadık demeyin! Yeni sirk açıldı, herkesi bekliyoruz!"</p>
+      <p class="font-bold text-amber-900">"Duyduk duymadık demeyin! Yeni sirk açıldı, herkesi bekliyoruz!"</p>
      </div>
      <div class="mt-8 flex justify-between">
       <button class="nav-btn px-6 py-3 rounded-xl font-bold opacity-50" disabled>Önceki Sayfa</button>
-      <button class="nav-btn px-6 py-3 rounded-xl font-bold" onclick="showScene('page2')">Sonraki Sayfa ➡️</button>
+      <button class="nav-btn px-6 py-3 rounded-xl font-bold" onclick="showScene('page2')">Sayfayı Çevir ➡️</button>
      </div>
      <p class="signature text-center">Developed by <i>Sinan/Nisan</i></p>
     </div>
@@ -77,8 +95,8 @@
 
    <!-- SAYFA 2 -->
    <div id="page2" class="scene">
-    <div class="story-box backdrop-blur-sm rounded-2xl p-6 md:p-10 shadow-2xl">
-     <h2 class="text-center mb-6 text-3xl text-yellow-400" style="font-family:'Fraunces',serif">Müjde!</h2>
+    <div class="book-page p-6 md:p-10 shadow-2xl">
+     <h2 class="text-center mb-6 text-3xl text-amber-800" style="font-family:'Fraunces',serif">Müjde!</h2>
      <img src="2.jpg" alt="Pembe Panter telefonda" class="story-img w-full max-w-xl mx-auto rounded-xl mb-6 object-contain">
      <div class="space-y-3 text-lg leading-relaxed">
       <p>Bu haberi duyduktan kısa bir süre sonra Pembe Panter’in telefonu çalmaya başladı: <i>Ninining, ninining, ninining!</i> Arayan Pembe Panter’in annesiydi.</p>
@@ -87,7 +105,7 @@
      </div>
      <div class="mt-8 flex justify-between">
       <button class="nav-btn px-6 py-3 rounded-xl font-bold" onclick="showScene('page1')">⬅️ Önceki Sayfa</button>
-      <button class="nav-btn px-6 py-3 rounded-xl font-bold" onclick="showScene('page3')">Sonraki Sayfa ➡️</button>
+      <button class="nav-btn px-6 py-3 rounded-xl font-bold" onclick="showScene('page3')">Sayfayı Çevir ➡️</button>
      </div>
      <p class="signature text-center">Developed by <i>Sinan/Nisan</i></p>
     </div>
@@ -95,8 +113,8 @@
 
    <!-- SAYFA 3 -->
    <div id="page3" class="scene">
-    <div class="story-box backdrop-blur-sm rounded-2xl p-6 md:p-10 shadow-2xl">
-     <h2 class="text-center mb-6 text-3xl text-yellow-400" style="font-family:'Fraunces',serif">Heyecan Başlıyor</h2>
+    <div class="book-page p-6 md:p-10 shadow-2xl">
+     <h2 class="text-center mb-6 text-3xl text-amber-800" style="font-family:'Fraunces',serif">Heyecan Başlıyor</h2>
      <img src="3.jpg" alt="Sevinçle zıplayan balıklar" class="story-img w-full max-w-xl mx-auto rounded-xl mb-6 object-contain">
      <div class="space-y-3 text-lg leading-relaxed">
       <p>Bunu duyan yedi kahraman yerlerinde duramayacak kadar mutlu oldular ve sevinçle zıplamaya başladılar: "Heyyy!"</p>
@@ -104,7 +122,7 @@
      </div>
      <div class="mt-8 flex justify-between">
       <button class="nav-btn px-6 py-3 rounded-xl font-bold" onclick="showScene('page2')">⬅️ Önceki Sayfa</button>
-      <button class="nav-btn px-6 py-3 rounded-xl font-bold" onclick="showScene('page4')">Sonraki Sayfa ➡️</button>
+      <button class="nav-btn px-6 py-3 rounded-xl font-bold" onclick="showScene('page4')">Sayfayı Çevir ➡️</button>
      </div>
      <p class="signature text-center">Developed by <i>Sinan/Nisan</i></p>
     </div>
@@ -112,8 +130,8 @@
 
    <!-- SAYFA 4 -->
    <div id="page4" class="scene">
-    <div class="story-box backdrop-blur-sm rounded-2xl p-6 md:p-10 shadow-2xl">
-     <h2 class="text-center mb-6 text-3xl text-yellow-400" style="font-family:'Fraunces',serif">İsveç Yolculuğu</h2>
+    <div class="book-page p-6 md:p-10 shadow-2xl">
+     <h2 class="text-center mb-6 text-3xl text-amber-800" style="font-family:'Fraunces',serif">İsveç Yolculuğu</h2>
      <img src="4.jpg" alt="Denizaltı ve su arabası" class="story-img w-full max-w-xl mx-auto rounded-xl mb-6 object-contain">
      <div class="space-y-3 text-lg leading-relaxed">
       <p>Birden bir ses duyuldu: "Çocuklar, yarın gideceğimiz sirk çok uzakta! Bu yüzden hemen valizleri hazırlayın. Akşam uçup İsveç'e gidiyoruz!"</p>
@@ -121,7 +139,7 @@
      </div>
      <div class="mt-8 flex justify-between">
       <button class="nav-btn px-6 py-3 rounded-xl font-bold" onclick="showScene('page3')">⬅️ Önceki Sayfa</button>
-      <button class="nav-btn px-6 py-3 rounded-xl font-bold" onclick="showScene('page5')">Sonraki Sayfa ➡️</button>
+      <button class="nav-btn px-6 py-3 rounded-xl font-bold" onclick="showScene('page5')">Sayfayı Çevir ➡️</button>
      </div>
      <p class="signature text-center">Developed by <i>Sinan/Nisan</i></p>
     </div>
@@ -129,12 +147,12 @@
 
    <!-- SAYFA 5 -->
    <div id="page5" class="scene">
-    <div class="story-box backdrop-blur-sm rounded-2xl p-6 md:p-10 shadow-2xl">
-     <h2 class="text-center mb-6 text-3xl text-yellow-400" style="font-family:'Fraunces',serif">Kostüm Telası</h2>
+    <div class="book-page p-6 md:p-10 shadow-2xl">
+     <h2 class="text-center mb-6 text-3xl text-amber-800" style="font-family:'Fraunces',serif">Kostüm Telası</h2>
      <img src="5.jpg" alt="Kostümlerini giyen balıklar" class="story-img w-full max-w-xl mx-auto rounded-xl mb-6 object-contain">
      <div class="space-y-3 text-lg leading-relaxed">
       <p>Uyandıklarında çok geç olmuştu! Hemen telaşla sirke gitmek için hazırlanmaya başladılar. Hepsi birbirinden ilginç ve tatlı kostümler seçti:</p>
-      <ul class="list-disc list-inside bg-black/20 p-4 rounded-lg text-base">
+      <ul class="list-disc list-inside bg-amber-50 p-4 rounded-lg text-base">
        <li><b>Mirfish:</b> Kırmızı güzel ayakkabılar giydi ve aslan yelesi taktı.</li>
        <li><b>Rosyfish:</b> Eldiven ve şapka taktı.</li>
        <li><b>Bugsyfish:</b> Kulaklarına şekil verip komik bir görünüme büründü.</li>
@@ -146,7 +164,7 @@
      </div>
      <div class="mt-8 flex justify-between">
       <button class="nav-btn px-6 py-3 rounded-xl font-bold" onclick="showScene('page4')">⬅️ Önceki Sayfa</button>
-      <button class="nav-btn px-6 py-3 rounded-xl font-bold" onclick="showScene('page6')">Sonraki Sayfa ➡️</button>
+      <button class="nav-btn px-6 py-3 rounded-xl font-bold" onclick="showScene('page6')">Sayfayı Çevir ➡️</button>
      </div>
      <p class="signature text-center">Developed by <i>Sinan/Nisan</i></p>
     </div>
@@ -154,8 +172,8 @@
 
    <!-- SAYFA 6 -->
    <div id="page6" class="scene">
-    <div class="story-box backdrop-blur-sm rounded-2xl p-6 md:p-10 shadow-2xl">
-     <h2 class="text-center mb-6 text-3xl text-yellow-400" style="font-family:'Fraunces',serif">Devasa Çadır</h2>
+    <div class="book-page p-6 md:p-10 shadow-2xl">
+     <h2 class="text-center mb-6 text-3xl text-amber-800" style="font-family:'Fraunces',serif">Devasa Çadır</h2>
      <img src="6.jpg" alt="Sirkin büyük çadırı" class="story-img w-full max-w-xl mx-auto rounded-xl mb-6 object-contain">
      <div class="space-y-3 text-lg leading-relaxed">
       <p>Herkes çok iyi hazırlanmıştı. Sirkin devasa çadırına geldiklerinde, Rozi gözlerine inanamayarak, "Vay canına, inanamıyorum! Buranın bu kadar büyük ve kocaman olacağını tahmin etmemiştim!" dedi.</p>
@@ -163,7 +181,7 @@
      </div>
      <div class="mt-8 flex justify-between">
       <button class="nav-btn px-6 py-3 rounded-xl font-bold" onclick="showScene('page5')">⬅️ Önceki Sayfa</button>
-      <button class="nav-btn px-6 py-3 rounded-xl font-bold" onclick="showScene('page7')">Sonraki Sayfa ➡️</button>
+      <button class="nav-btn px-6 py-3 rounded-xl font-bold" onclick="showScene('page7')">Sayfayı Çevir ➡️</button>
      </div>
      <p class="signature text-center">Developed by <i>Sinan/Nisan</i></p>
     </div>
@@ -171,8 +189,8 @@
 
    <!-- SAYFA 7 -->
    <div id="page7" class="scene">
-    <div class="story-box backdrop-blur-sm rounded-2xl p-6 md:p-10 shadow-2xl">
-     <h2 class="text-center mb-6 text-3xl text-yellow-400" style="font-family:'Fraunces',serif">Havuç ve Sıra</h2>
+    <div class="book-page p-6 md:p-10 shadow-2xl">
+     <h2 class="text-center mb-6 text-3xl text-amber-800" style="font-family:'Fraunces',serif">Havuç ve Sıra</h2>
      <img src="7.jpg" alt="Bilet sırasında bekleyen balıklar" class="story-img w-full max-w-xl mx-auto rounded-xl mb-6 object-contain">
      <div class="space-y-3 text-lg leading-relaxed">
       <p>Deniz havuçlarını çok seven Bugsyfish ise merakla sordu: "İçeride havuçlar var mıdır?"</p>
@@ -180,7 +198,7 @@
      </div>
      <div class="mt-8 flex justify-between">
       <button class="nav-btn px-6 py-3 rounded-xl font-bold" onclick="showScene('page6')">⬅️ Önceki Sayfa</button>
-      <button class="nav-btn px-6 py-3 rounded-xl font-bold" onclick="showScene('page8')">Sonraki Sayfa ➡️</button>
+      <button class="nav-btn px-6 py-3 rounded-xl font-bold" onclick="showScene('page8')">Sayfayı Çevir ➡️</button>
      </div>
      <p class="signature text-center">Developed by <i>Sinan/Nisan</i></p>
     </div>
@@ -188,8 +206,8 @@
 
    <!-- SAYFA 8 -->
    <div id="page8" class="scene">
-    <div class="story-box backdrop-blur-sm rounded-2xl p-6 md:p-10 shadow-2xl">
-     <h2 class="text-center mb-6 text-3xl text-yellow-400" style="font-family:'Fraunces',serif">Muhteşem Gösteri</h2>
+    <div class="book-page p-6 md:p-10 shadow-2xl">
+     <h2 class="text-center mb-6 text-3xl text-amber-800" style="font-family:'Fraunces',serif">Muhteşem Gösteri</h2>
      <img src="8.jpg" alt="Sirk gösterileri" class="story-img w-full max-w-xl mx-auto rounded-xl mb-6 object-contain">
      <div class="space-y-3 text-lg leading-relaxed">
       <p>15 dakika sonra herkes yerine yerleştiğinde muhteşem gösteri başladı!</p>
@@ -198,7 +216,7 @@
      </div>
      <div class="mt-8 flex justify-between">
       <button class="nav-btn px-6 py-3 rounded-xl font-bold" onclick="showScene('page7')">⬅️ Önceki Sayfa</button>
-      <button class="nav-btn px-6 py-3 rounded-xl font-bold" onclick="showScene('page9')">Sonraki Sayfa ➡️</button>
+      <button class="nav-btn px-6 py-3 rounded-xl font-bold" onclick="showScene('page9')">Sayfayı Çevir ➡️</button>
      </div>
      <p class="signature text-center">Developed by <i>Sinan/Nisan</i></p>
     </div>
@@ -206,8 +224,8 @@
 
    <!-- SAYFA 9 -->
    <div id="page9" class="scene">
-    <div class="story-box backdrop-blur-sm rounded-2xl p-6 md:p-10 shadow-2xl">
-     <h2 class="text-center mb-6 text-3xl text-yellow-400" style="font-family:'Fraunces',serif">Üzücü Haber</h2>
+    <div class="book-page p-6 md:p-10 shadow-2xl">
+     <h2 class="text-center mb-6 text-3xl text-amber-800" style="font-family:'Fraunces',serif">Üzücü Haber</h2>
      <img src="9.jpg" alt="Hastalanan Sinfish" class="story-img w-full max-w-xl mx-auto rounded-xl mb-6 object-contain">
      <div class="space-y-3 text-lg leading-relaxed">
       <p>Aylar, yıllar geçti ve yeni bir sirk gösterisinin zamanı geldi. Bütün arkadaşlar oraya tekrar gitmek için sabırsızlanıyordu.</p>
@@ -215,7 +233,7 @@
      </div>
      <div class="mt-8 flex justify-between">
       <button class="nav-btn px-6 py-3 rounded-xl font-bold" onclick="showScene('page8')">⬅️ Önceki Sayfa</button>
-      <button class="nav-btn px-6 py-3 rounded-xl font-bold" onclick="showScene('page10')">Sonraki Sayfa ➡️</button>
+      <button class="nav-btn px-6 py-3 rounded-xl font-bold" onclick="showScene('page10')">Sayfayı Çevir ➡️</button>
      </div>
      <p class="signature text-center">Developed by <i>Sinan/Nisan</i></p>
     </div>
@@ -223,8 +241,8 @@
 
    <!-- SAYFA 10 -->
    <div id="page10" class="scene">
-    <div class="story-box backdrop-blur-sm rounded-2xl p-6 md:p-10 shadow-2xl">
-     <h2 class="text-center mb-6 text-3xl text-yellow-400" style="font-family:'Fraunces',serif">Gerçek Dostluk</h2>
+    <div class="book-page p-6 md:p-10 shadow-2xl">
+     <h2 class="text-center mb-6 text-3xl text-amber-800" style="font-family:'Fraunces',serif">Gerçek Dostluk</h2>
      <img src="10.jpg" alt="Sinfish'i ziyaret eden arkadaşları" class="story-img w-full max-w-xl mx-auto rounded-xl mb-6 object-contain">
      <div class="space-y-3 text-lg leading-relaxed">
       <p>Sinfish sirke gidemeyeceği için çok üzüldü, ama gerçek dostluk kendini tam da burada gösterdi. Arkadaşları onu yalnız bırakmayıp yanında kaldılar.</p>
@@ -232,7 +250,7 @@
      </div>
      <div class="mt-8 flex justify-between">
       <button class="nav-btn px-6 py-3 rounded-xl font-bold" onclick="showScene('page9')">⬅️ Önceki Sayfa</button>
-      <button class="nav-btn px-6 py-3 rounded-xl font-bold" onclick="showScene('page11')">Sonraki Sayfa ➡️</button>
+      <button class="nav-btn px-6 py-3 rounded-xl font-bold" onclick="showScene('page11')">Sayfayı Çevir ➡️</button>
      </div>
      <p class="signature text-center">Developed by <i>Sinan/Nisan</i></p>
     </div>
@@ -240,8 +258,8 @@
 
    <!-- SAYFA 11 -->
    <div id="page11" class="scene">
-    <div class="story-box backdrop-blur-sm rounded-2xl p-6 md:p-10 shadow-2xl">
-     <h2 class="text-center mb-6 text-3xl text-yellow-400" style="font-family:'Fraunces',serif">Zamanla Yarış</h2>
+    <div class="book-page p-6 md:p-10 shadow-2xl">
+     <h2 class="text-center mb-6 text-3xl text-amber-800" style="font-family:'Fraunces',serif">Zamanla Yarış</h2>
      <img src="11.jpg" alt="İsveç'e yolculuk" class="story-img w-full max-w-xl mx-auto rounded-xl mb-6 object-contain">
      <div class="space-y-3 text-lg leading-relaxed">
       <p>Sirkin başlamasına 13 saat kalmıştı ve İsveç'e varmaları 10 saat sürüyordu.</p>
@@ -249,7 +267,7 @@
      </div>
      <div class="mt-8 flex justify-between">
       <button class="nav-btn px-6 py-3 rounded-xl font-bold" onclick="showScene('page10')">⬅️ Önceki Sayfa</button>
-      <button class="nav-btn px-6 py-3 rounded-xl font-bold" onclick="showScene('page12')">Sonraki Sayfa ➡️</button>
+      <button class="nav-btn px-6 py-3 rounded-xl font-bold" onclick="showScene('page12')">Sayfayı Çevir ➡️</button>
      </div>
      <p class="signature text-center">Developed by <i>Sinan/Nisan</i></p>
     </div>
@@ -257,12 +275,12 @@
 
    <!-- SAYFA 12 -->
    <div id="page12" class="scene">
-    <div class="story-box backdrop-blur-sm rounded-2xl p-6 md:p-10 shadow-2xl">
-     <h2 class="text-center mb-6 text-3xl text-yellow-400" style="font-family:'Fraunces',serif">Mutlu Son</h2>
+    <div class="book-page p-6 md:p-10 shadow-2xl">
+     <h2 class="text-center mb-6 text-3xl text-amber-800" style="font-family:'Fraunces',serif">Mutlu Son</h2>
      <img src="12.jpg" alt="Sirke yetişen balıklar" class="story-img w-full max-w-xl mx-auto rounded-xl mb-6 object-contain">
      <div class="space-y-3 text-lg leading-relaxed">
       <p>Gösterinin başlamasına sadece 10 dakika kala sirke yetişmeyi başardılar ve bu muhteşem gösteriyi ikinci kez keyifle izlediler!</p>
-      <p class="text-xl font-bold text-yellow-300 text-center mt-6">Veeee bu hikaye de burada bittiiii.</p>
+      <p class="text-xl font-bold text-amber-900 text-center mt-6">Veeee bu hikaye de burada bittiiii.</p>
      </div>
      <div class="mt-8 flex justify-between">
       <button class="nav-btn px-6 py-3 rounded-xl font-bold" onclick="showScene('page11')">⬅️ Önceki Sayfa</button>
