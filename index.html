@@ -48,6 +48,7 @@
             border-radius: 0px 15px 15px 0px;
             position: relative;
             overflow: hidden;
+            padding-bottom: 80px; /* Köşe butonlarıyla çakışmaması için alt boşluk */
         }
         
         /* İç resimlere kağıt dokusu uyumu */
@@ -70,6 +71,7 @@
             font-size: 24px;
             color: #8d6e63;
             transition: width 0.3s, height 0.3s;
+            z-index: 10;
         }
         .page-corner-right {
             right: 0;
@@ -95,16 +97,22 @@
             height: 80px;
             background: linear-gradient(225deg, transparent 50%, #d7ccc8 50%);
         }
-        
-        /* İmza Stili */
-        .signature {
+
+        /* Künye Stili (Sadece 1. ve 12. sayfada) */
+        .kunye-box {
             margin-top: 40px;
-            font-size: 18px;
-            color: #8d6e63;
-            font-weight: bold;
-            border-top: 1px dashed rgba(141, 110, 99, 0.5);
-            padding-top: 15px;
-            padding-bottom: 80px; /* Köşe butonlarıyla çakışmaması için boşluk */
+            padding: 15px;
+            background-color: rgba(141, 110, 99, 0.1);
+            border: 2px solid #8d6e63;
+            border-radius: 10px;
+            font-size: 16px;
+            color: #4e342e;
+            text-align: center;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+        }
+        .kunye-box p {
+            margin: 0;
+            line-height: 1.5;
         }
     </style>
  </head>
@@ -120,7 +128,12 @@
       <p>Bir gün yedi küçük balık; Bugsyfish, Rosyfish, Mirfish, Elifish, Pinkfish, Sinfish ve Ninfish parkta neşeyle oynuyorlardı. Tam o sırada etrafta şöyle bir haber yankılandı:</p>
       <p class="font-bold text-amber-900">"Duyduk duymadık demeyin! Yeni sirk açıldı, herkesi bekliyoruz!"</p>
      </div>
-     <p class="signature text-center">Developed by <i>Sinan/Nisan</i></p>
+     
+     <!-- Künye -->
+     <div class="kunye-box">
+        <p><b>Yazarı:</b> Nisan &nbsp;|&nbsp; <b>Tasarımı:</b> Sinan &nbsp;|&nbsp; <b>Derleyen:</b> Sinan</p>
+     </div>
+
      <div class="page-corner page-corner-right" onclick="showScene('page2')">❯</div>
     </div>
    </div>
@@ -135,7 +148,6 @@
       <p>"Alo, anne! Niye aradın beni, ne oldu?" diye sordu Pinkfish.</p>
       <p>Annesi, "Yeni bir sirk açılmış, sizi oraya götüreceğiz, o yüzden aradım!" diyerek müjdeyi verdi.</p>
      </div>
-     <p class="signature text-center">Developed by <i>Sinan/Nisan</i></p>
      <div class="page-corner page-corner-left" onclick="showScene('page1')">❮</div>
      <div class="page-corner page-corner-right" onclick="showScene('page3')">❯</div>
     </div>
@@ -150,7 +162,6 @@
       <p>Bunu duyan yedi kahraman yerlerinde duramayacak kadar mutlu oldular ve sevinçle zıplamaya başladılar: "Heyyy!"</p>
       <p>Çok geçmeden herkesin annesi aramaya başladı; herkes biletleri alıyordu! Sirkin hangi tarihte olduğunu öğrenen kahramanlarımız o kadar heyecanlandılar ki, heyecandan ölecek gibi oldular. Pinkfish, "Ya bu sirk için çok heyecanlıyım!" diyerek duygularını dile getirdi.</p>
      </div>
-     <p class="signature text-center">Developed by <i>Sinan/Nisan</i></p>
      <div class="page-corner page-corner-left" onclick="showScene('page2')">❮</div>
      <div class="page-corner page-corner-right" onclick="showScene('page4')">❯</div>
     </div>
@@ -165,7 +176,6 @@
       <p>Birden bir ses duyuldu: "Çocuklar, yarın gideceğimiz sirk çok uzakta! Bu yüzden hemen valizleri hazırlayın. Akşam uçup İsveç'e gidiyoruz!"</p>
       <p>Çok geçmeden çocuklar İsveç'in denizini çok merak etmişlerdi. Hemen hazırlıklarını tamamlayıp denizaltı gemisine ve su arabasına bindiler. Ancak yolda o kadar uykuları geldi ki, deniz botunda derin bir uykuya daldılar.</p>
      </div>
-     <p class="signature text-center">Developed by <i>Sinan/Nisan</i></p>
      <div class="page-corner page-corner-left" onclick="showScene('page3')">❮</div>
      <div class="page-corner page-corner-right" onclick="showScene('page5')">❯</div>
     </div>
@@ -188,7 +198,6 @@
        <li><b>Ninfish:</b> Saçlarını değişik yapıp güzel kıyafetler giydi.</li>
       </ul>
      </div>
-     <p class="signature text-center">Developed by <i>Sinan/Nisan</i></p>
      <div class="page-corner page-corner-left" onclick="showScene('page4')">❮</div>
      <div class="page-corner page-corner-right" onclick="showScene('page6')">❯</div>
     </div>
@@ -203,7 +212,6 @@
       <p>Herkes çok iyi hazırlanmıştı. Sirkin devasa çadırına geldiklerinde, Rozi gözlerine inanamayarak, "Vay canına, inanamıyorum! Buranın bu kadar büyük ve kocaman olacağını tahmin etmemiştim!" dedi.</p>
       <p>Elifish ise, "Vay, burası hayalimden bile çok güzel," diyerek ona katıldı.</p>
      </div>
-     <p class="signature text-center">Developed by <i>Sinan/Nisan</i></p>
      <div class="page-corner page-corner-left" onclick="showScene('page5')">❮</div>
      <div class="page-corner page-corner-right" onclick="showScene('page7')">❯</div>
     </div>
@@ -218,7 +226,6 @@
       <p>Deniz havuçlarını çok seven Bugsyfish ise merakla sordu: "İçeride havuçlar var mıdır?"</p>
       <p>Çocuklar içeri girmek için biletlerini okutma sırasında beklerken biraz sıkılsalar da, "Keşke şu an saat ileride olsa da hemen sirkte eğleniyor olsak!" diye iç geçirdiler. Sıra onlara geldiğinde, nihayet içeri adım attılar.</p>
      </div>
-     <p class="signature text-center">Developed by <i>Sinan/Nisan</i></p>
      <div class="page-corner page-corner-left" onclick="showScene('page6')">❮</div>
      <div class="page-corner page-corner-right" onclick="showScene('page8')">❯</div>
     </div>
@@ -234,7 +241,6 @@
       <p>Aslanlar devasa halkaların içinden atladı. Fok balıkları burunlarının üzerinde çemberler çevirdi. Kocaman, boynuzları boyalı bir gergedan beyaz bir duvara ağaç resimleri çizdi.</p>
       <p>Gösteriyi o kadar sevdiler ki, sirk bittiğinde hemen bir sonrakine gitmek istediler.</p>
      </div>
-     <p class="signature text-center">Developed by <i>Sinan/Nisan</i></p>
      <div class="page-corner page-corner-left" onclick="showScene('page7')">❮</div>
      <div class="page-corner page-corner-right" onclick="showScene('page9')">❯</div>
     </div>
@@ -249,7 +255,6 @@
       <p>Aylar, yıllar geçti ve yeni bir sirk gösterisinin zamanı geldi. Bütün arkadaşlar oraya tekrar gitmek için sabırsızlanıyordu.</p>
       <p>Ancak tam o gün üzücü bir şey oldu: Sinfish hastalandı!</p>
      </div>
-     <p class="signature text-center">Developed by <i>Sinan/Nisan</i></p>
      <div class="page-corner page-corner-left" onclick="showScene('page8')">❮</div>
      <div class="page-corner page-corner-right" onclick="showScene('page10')">❯</div>
     </div>
@@ -264,7 +269,6 @@
       <p>Sinfish sirke gidemeyeceği için çok üzüldü, ama gerçek dostluk kendini tam da burada gösterdi. Arkadaşları onu yalnız bırakmayıp yanında kaldılar.</p>
       <p>Pinkfish hemen eczaneye koşup Sinfish için ilaçlar aldı.</p>
      </div>
-     <p class="signature text-center">Developed by <i>Sinan/Nisan</i></p>
      <div class="page-corner page-corner-left" onclick="showScene('page9')">❮</div>
      <div class="page-corner page-corner-right" onclick="showScene('page11')">❯</div>
     </div>
@@ -279,7 +283,6 @@
       <p>Sirkin başlamasına 13 saat kalmıştı ve İsveç'e varmaları 10 saat sürüyordu.</p>
       <p>İlaçları içen Sinfish hemen iyileşti! Aceleyle yola çıktılar, İsveç'e vardılar ve hemen otele geçip hazırlandılar.</p>
      </div>
-     <p class="signature text-center">Developed by <i>Sinan/Nisan</i></p>
      <div class="page-corner page-corner-left" onclick="showScene('page10')">❮</div>
      <div class="page-corner page-corner-right" onclick="showScene('page12')">❯</div>
     </div>
@@ -294,7 +297,12 @@
       <p>Gösterinin başlamasına sadece 10 dakika kala sirke yetişmeyi başardılar ve bu muhteşem gösteriyi ikinci kez keyifle izlediler!</p>
       <p class="text-xl font-bold text-amber-900 text-center mt-6">Veeee bu hikaye de burada bittiiii.</p>
      </div>
-     <p class="signature text-center">Developed by <i>Sinan/Nisan</i></p>
+
+     <!-- Künye -->
+     <div class="kunye-box">
+        <p><b>Yazarı:</b> Nisan &nbsp;|&nbsp; <b>Tasarımı:</b> Sinan &nbsp;|&nbsp; <b>Derleyen:</b> Sinan</p>
+     </div>
+
      <div class="page-corner page-corner-left" onclick="showScene('page11')">❮</div>
      <div class="page-corner page-corner-right" onclick="showScene('page1')">🔄</div>
     </div>
