@@ -22,10 +22,10 @@
             justify-content: center;
             align-items: center;
             perspective: 2500px;
-            overflow-x: hidden; /* Yatay kaydırmayı kesinlikle engeller */
+            overflow-x: hidden; 
         }
         
-        /* 3D Kitap Sahnesi (Varsayılan: Bilgisayar) */
+        /* 3D Kitap Sahnesi */
         .book-stage {
             transform-style: preserve-3d;
             transform: rotateX(30deg);
@@ -35,7 +35,7 @@
             z-index: 10;
         }
 
-        /* Sayfa Geçiş Animasyonu */
+        /* Sayfa Geçiş Animasyonları */
         .scene { 
             display: none; 
             position: relative;
@@ -43,25 +43,27 @@
         }
         .scene.active { 
             display: block; 
-            animation: pageCurl 1.8s cubic-bezier(0.22, 1, 0.36, 1) forwards; 
+            animation-duration: 1s; 
+            animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+            animation-fill-mode: forwards;
         }
-        @keyframes pageCurl {
-            0% { 
-                transform: rotateY(-170deg) translateZ(15px); 
-                transform-origin: left center; 
-                opacity: 0; 
-                box-shadow: -30px 20px 50px rgba(0,0,0,0.6);
-            }
-            40% {
-                opacity: 1;
-                transform: rotateY(-90deg) translateZ(20px);
-                box-shadow: -40px 15px 60px rgba(0,0,0,0.7);
-            }
-            100% { 
-                transform: rotateY(0deg) translateZ(0px); 
-                transform-origin: left center; 
-                opacity: 1; 
-            }
+        
+        /* İleri Çevirme (Sağdan Sola) */
+        .scene.active.forward {
+            animation-name: turnForward;
+        }
+        @keyframes turnForward {
+            0% { transform: rotateY(-95deg); transform-origin: right center; opacity: 1; box-shadow: -20px 15px 30px rgba(0,0,0,0.5); }
+            100% { transform: rotateY(0deg); transform-origin: right center; opacity: 1; box-shadow: 0 0 0 rgba(0,0,0,0); }
+        }
+
+        /* Geri Çevirme (Soldan Sağa) */
+        .scene.active.backward {
+            animation-name: turnBackward;
+        }
+        @keyframes turnBackward {
+            0% { transform: rotateY(95deg); transform-origin: left center; opacity: 1; box-shadow: 20px 15px 30px rgba(0,0,0,0.5); }
+            100% { transform: rotateY(0deg); transform-origin: left center; opacity: 1; box-shadow: 0 0 0 rgba(0,0,0,0); }
         }
 
         /* Kitap Sayfası Tasarımı */
@@ -82,9 +84,7 @@
         .book-page::after {
             content: '';
             position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
+            top: 0; right: 0; bottom: 0;
             width: 100%;
             background: transparent;
             border-radius: 0px 8px 8px 0px;
@@ -156,6 +156,19 @@
         .story-content { position: relative; z-index: 2; }
         .story-content p { margin-bottom: 1.2rem; line-height: 1.8; text-align: justify; }
 
+        /* Sayfa Numarası */
+        .page-number {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Fraunces', serif;
+            color: #8d6e63;
+            font-size: 14px;
+            z-index: 20;
+            opacity: 0.8;
+        }
+
         /* Sayfa Kıvrımları (Köşeler) */
         .page-corner {
             position: absolute; bottom: 0;
@@ -193,6 +206,31 @@
         }
         .page-corner-left::after { content: '❮'; right: auto; left: 15px; }
 
+        /* Baştan Başla Butonu (Sadece 12. sayfada) */
+        .replay-btn {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: #5d4037;
+            color: #fdfbf6;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-family: 'Fraunces', serif;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .replay-btn:hover {
+            background: #4e342e;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(0,0,0,0.3);
+        }
+
         .kunye-box {
             margin-top: 40px; padding: 20px;
             background-color: rgba(141, 110, 99, 0.08);
@@ -201,54 +239,28 @@
             font-family: 'Fraunces', serif; position: relative; z-index: 2;
         }
 
-        /* =========================================
-           TABLET AYARLARI (768px - 1024px arası)
-           ========================================= */
+        /* TABLET AYARLARI */
         @media (max-width: 1024px) {
-            body {
-                padding: 20px 10px;
-                align-items: flex-start;
-            }
-            .book-stage {
-                transform: rotateX(15deg); /* Açıyı azalt */
-                max-width: 95%;
-            }
-            .book-page {
-                padding: 40px 35px 80px 35px;
-            }
+            body { padding: 20px 10px; align-items: flex-start; }
+            .book-stage { transform: rotateX(15deg); max-width: 95%; }
+            .book-page { padding: 40px 35px 80px 35px; }
         }
 
-        /* =========================================
-           TELEFON AYARLARI (768px altı)
-           ========================================= */
+        /* TELEFON AYARLARI */
         @media (max-width: 768px) {
-            body {
-                padding: 10px;
-                perspective: none; /* 3D perspektifi kapat */
-            }
-            .book-stage {
-                transform: none; /* Kitabı tamamen düzleştir */
-                max-width: 100%;
-            }
-            .book-page {
-                padding: 30px 20px 70px 25px; /* Kenar boşluklarını daralt */
-            }
-            /* Tablet ve bilgisayardaki sağ kenar kalın gölgeleri telefondan kaldır */
+            body { padding: 10px; perspective: 1200px; }
+            .book-stage { transform: none; max-width: 100%; }
+            .book-page { padding: 30px 20px 70px 25px; }
             .book-page::after {
                 box-shadow: 2px 0 0 #e0dccf, 4px 0 0 #d4cfbe, 5px 10px 15px rgba(0,0,0,0.4);
                 transform: translateZ(0); 
             }
-            /* Dev başlıkları küçült */
             h1 { font-size: 2.5rem; }
             h2 { font-size: 2rem; }
             .story-content { font-size: 1.1rem; }
-            .story-content > p:first-of-type::first-letter {
-                font-size: 2.8rem;
-            }
-            .kunye-box {
-                font-size: 14px;
-                padding: 15px;
-            }
+            .story-content > p:first-of-type::first-letter { font-size: 2.8rem; }
+            .kunye-box { font-size: 14px; padding: 15px; }
+            .replay-btn { font-size: 12px; padding: 6px 12px; bottom: 15px; right: 15px; }
         }
     </style>
  </head>
@@ -256,7 +268,7 @@
   <main class="book-stage">
 
    <!-- SAYFA 1 -->
-   <div id="page1" class="scene active">
+   <div id="page1" class="scene active forward">
     <div class="book-page">
      <div class="book-spine"></div>
      <h1 class="text-center mb-10 text-5xl md:text-6xl">Sirk Telaşı</h1>
@@ -270,7 +282,8 @@
         <p><b>Yazarı:</b> Nisan &nbsp;|&nbsp; <b>Tasarımı:</b> Sinan &nbsp;|&nbsp; <b>Derleyen:</b> Sinan</p>
      </div>
 
-     <div class="page-corner page-corner-right" onclick="showScene('page2')"></div>
+     <div class="page-number">1 / 12</div>
+     <div class="page-corner page-corner-right" onclick="showScene('page2', 'forward')"></div>
     </div>
    </div>
 
@@ -285,8 +298,9 @@
       <p>"Alo, anne! Niye aradın beni, ne oldu?" diye sordu Pinkfish.</p>
       <p>Annesi, "Yeni bir sirk açılmış, sizi oraya götüreceğiz, o yüzden aradım!" diyerek müjdeyi verdi.</p>
      </div>
-     <div class="page-corner page-corner-left" onclick="showScene('page1')"></div>
-     <div class="page-corner page-corner-right" onclick="showScene('page3')"></div>
+     <div class="page-number">2 / 12</div>
+     <div class="page-corner page-corner-left" onclick="showScene('page1', 'backward')"></div>
+     <div class="page-corner page-corner-right" onclick="showScene('page3', 'forward')"></div>
     </div>
    </div>
 
@@ -300,8 +314,9 @@
       <p>Bunu duyan yedi kahraman yerlerinde duramayacak kadar mutlu oldular ve sevinçle zıplamaya başladılar: "Heyyy!"</p>
       <p>Çok geçmeden herkesin annesi aramaya başladı; herkes biletleri alıyordu! Sirkin hangi tarihte olduğunu öğrenen kahramanlarımız o kadar heyecanlandılar ki, heyecandan ölecek gibi oldular. Pinkfish, "Ya bu sirk için çok heyecanlıyım!" diyerek duygularını dile getirdi.</p>
      </div>
-     <div class="page-corner page-corner-left" onclick="showScene('page2')"></div>
-     <div class="page-corner page-corner-right" onclick="showScene('page4')"></div>
+     <div class="page-number">3 / 12</div>
+     <div class="page-corner page-corner-left" onclick="showScene('page2', 'backward')"></div>
+     <div class="page-corner page-corner-right" onclick="showScene('page4', 'forward')"></div>
     </div>
    </div>
 
@@ -315,8 +330,9 @@
       <p>Birden bir ses duyuldu: "Çocuklar, yarın gideceğimiz sirk çok uzakta! Bu yüzden hemen valizleri hazırlayın. Akşam uçup İsveç'e gidiyoruz!"</p>
       <p>Çok geçmeden çocuklar İsveç'in denizini çok merak etmişlerdi. Hemen hazırlıklarını tamamlayıp denizaltı gemisine ve su arabasına bindiler. Ancak yolda o kadar uykuları geldi ki, deniz botunda derin bir uykuya daldılar.</p>
      </div>
-     <div class="page-corner page-corner-left" onclick="showScene('page3')"></div>
-     <div class="page-corner page-corner-right" onclick="showScene('page5')"></div>
+     <div class="page-number">4 / 12</div>
+     <div class="page-corner page-corner-left" onclick="showScene('page3', 'backward')"></div>
+     <div class="page-corner page-corner-right" onclick="showScene('page5', 'forward')"></div>
     </div>
    </div>
 
@@ -338,8 +354,9 @@
        <li><b>Ninfish:</b> Saçlarını değişik yapıp güzel kıyafetler giydi.</li>
       </ul>
      </div>
-     <div class="page-corner page-corner-left" onclick="showScene('page4')"></div>
-     <div class="page-corner page-corner-right" onclick="showScene('page6')"></div>
+     <div class="page-number">5 / 12</div>
+     <div class="page-corner page-corner-left" onclick="showScene('page4', 'backward')"></div>
+     <div class="page-corner page-corner-right" onclick="showScene('page6', 'forward')"></div>
     </div>
    </div>
 
@@ -353,8 +370,9 @@
       <p>Herkes çok iyi hazırlanmıştı. Sirkin devasa çadırına geldiklerinde, Rozi gözlerine inanamayarak, "Vay canına, inanamıyorum! Buranın bu kadar büyük ve kocaman olacağını tahmin etmemiştim!" dedi.</p>
       <p>Elifish ise, "Vay, burası hayalimden bile çok güzel," diyerek ona katıldı.</p>
      </div>
-     <div class="page-corner page-corner-left" onclick="showScene('page5')"></div>
-     <div class="page-corner page-corner-right" onclick="showScene('page7')"></div>
+     <div class="page-number">6 / 12</div>
+     <div class="page-corner page-corner-left" onclick="showScene('page5', 'backward')"></div>
+     <div class="page-corner page-corner-right" onclick="showScene('page7', 'forward')"></div>
     </div>
    </div>
 
@@ -368,8 +386,9 @@
       <p>Deniz havuçlarını çok seven Bugsyfish ise merakla sordu: "İçeride havuçlar var mıdır?"</p>
       <p>Çocuklar içeri girmek için biletlerini okutma sırasında beklerken biraz sıkılsalar da, "Keşke şu an saat ileride olsa da hemen sirkte eğleniyor olsak!" diye iç geçirdiler. Sıra onlara geldiğinde, nihayet içeri adım attılar.</p>
      </div>
-     <div class="page-corner page-corner-left" onclick="showScene('page6')"></div>
-     <div class="page-corner page-corner-right" onclick="showScene('page8')"></div>
+     <div class="page-number">7 / 12</div>
+     <div class="page-corner page-corner-left" onclick="showScene('page6', 'backward')"></div>
+     <div class="page-corner page-corner-right" onclick="showScene('page8', 'forward')"></div>
     </div>
    </div>
 
@@ -384,8 +403,9 @@
       <p>Aslanlar devasa halkaların içinden atladı. Fok balıkları burunlarının üzerinde çemberler çevirdi. Kocaman, boynuzları boyalı bir gergedan beyaz bir duvara ağaç resimleri çizdi.</p>
       <p>Gösteriyi o kadar sevdiler ki, sirk bittiğinde hemen bir sonrakine gitmek istediler.</p>
      </div>
-     <div class="page-corner page-corner-left" onclick="showScene('page7')"></div>
-     <div class="page-corner page-corner-right" onclick="showScene('page9')"></div>
+     <div class="page-number">8 / 12</div>
+     <div class="page-corner page-corner-left" onclick="showScene('page7', 'backward')"></div>
+     <div class="page-corner page-corner-right" onclick="showScene('page9', 'forward')"></div>
     </div>
    </div>
 
@@ -399,8 +419,9 @@
       <p>Aylar, yıllar geçti ve yeni bir sirk gösterisinin zamanı geldi. Bütün arkadaşlar oraya tekrar gitmek için sabırsızlanıyordu.</p>
       <p>Ancak tam o gün üzücü bir şey oldu: Sinfish hastalandı!</p>
      </div>
-     <div class="page-corner page-corner-left" onclick="showScene('page8')"></div>
-     <div class="page-corner page-corner-right" onclick="showScene('page10')"></div>
+     <div class="page-number">9 / 12</div>
+     <div class="page-corner page-corner-left" onclick="showScene('page8', 'backward')"></div>
+     <div class="page-corner page-corner-right" onclick="showScene('page10', 'forward')"></div>
     </div>
    </div>
 
@@ -414,8 +435,9 @@
       <p>Sinfish sirke gidemeyeceği için çok üzüldü, ama gerçek dostluk kendini tam da burada gösterdi. Arkadaşları onu yalnız bırakmayıp yanında kaldılar.</p>
       <p>Pinkfish hemen eczaneye koşup Sinfish için ilaçlar aldı.</p>
      </div>
-     <div class="page-corner page-corner-left" onclick="showScene('page9')"></div>
-     <div class="page-corner page-corner-right" onclick="showScene('page11')"></div>
+     <div class="page-number">10 / 12</div>
+     <div class="page-corner page-corner-left" onclick="showScene('page9', 'backward')"></div>
+     <div class="page-corner page-corner-right" onclick="showScene('page11', 'forward')"></div>
     </div>
    </div>
 
@@ -429,8 +451,9 @@
       <p>Sirkin başlamasına 13 saat kalmıştı ve İsveç'e varmaları 10 saat sürüyordu.</p>
       <p>İlaçları içen Sinfish hemen iyileşti! Aceleyle yola çıktılar, İsveç'e vardılar ve hemen otele geçip hazırlandılar.</p>
      </div>
-     <div class="page-corner page-corner-left" onclick="showScene('page10')"></div>
-     <div class="page-corner page-corner-right" onclick="showScene('page12')"></div>
+     <div class="page-number">11 / 12</div>
+     <div class="page-corner page-corner-left" onclick="showScene('page10', 'backward')"></div>
+     <div class="page-corner page-corner-right" onclick="showScene('page12', 'forward')"></div>
     </div>
    </div>
 
@@ -449,17 +472,23 @@
         <p><b>Yazarı:</b> Nisan &nbsp;|&nbsp; <b>Tasarımı:</b> Sinan &nbsp;|&nbsp; <b>Derleyen:</b> Sinan</p>
      </div>
 
-     <div class="page-corner page-corner-left" onclick="showScene('page11')"></div>
-     <div class="page-corner page-corner-right" onclick="showScene('page1')"></div>
+     <div class="page-number">12 / 12</div>
+     <div class="page-corner page-corner-left" onclick="showScene('page11', 'backward')"></div>
+     <div class="replay-btn" onclick="showScene('page1', 'forward')">Baştan Başla 🔁</div>
     </div>
    </div>
 
   </main>
 
   <script>
-    function showScene(id) {
-        document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
+    function showScene(id, direction) {
+        var scenes = document.querySelectorAll('.scene');
+        scenes.forEach(function(s) {
+            s.classList.remove('active', 'forward', 'backward');
+        });
+        var target = document.getElementById(id);
+        target.classList.add('active');
+        target.classList.add(direction);
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   </script>
